@@ -1,3 +1,16 @@
+# Medical Appointment App
+
+## Objetivo General
+Desarrollar un sistema web integral para la gestión de citas médicas que permita a pacientes, doctores y administradores optimizar el proceso de agendamiento y seguimiento de consultas.
+
+## Tecnologías a utilizar
+* **Backend:** PHP 8.x, Laravel 10/11
+* **Frontend:** Livewire, Blade, Tailwind CSS
+* **Base de Datos:** MySQL / MariaDB
+* **Autenticación:** Laravel Jetstream
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
