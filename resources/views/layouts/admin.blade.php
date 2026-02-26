@@ -1,3 +1,7 @@
+@props([
+'title' => config('app.name', 'Laravel'), //Titulo por defecto
+'breadcrumbs' => [] //Array vacio por defecto
+])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -18,8 +22,8 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased bg-gray-50-100">        
-
+    <body class="font-sans antialiased bg-gray-50-100">       
+       
     @include('layouts.includes.admin.navigation')
         @include('layouts.includes.admin.sidebar')
 
@@ -28,6 +32,7 @@
 
 <div class="p-4 sm:ml-64 mt-14">
 <div class="mt-14">
+   @include('layouts.includes.admin.breadcrumb')
   {{ $slot }}
 </div>
 
