@@ -7,32 +7,15 @@
             'active' => request()->routeIs('admin.dashboard'),
         ],
         [
-            'header' => 'Administración',
+            'header' => 'Gestión',
         ],
-        [
-            'name' => 'Tienda en línea',
-            'icono' => 'fa-solid fa-user',
-            'href' => route('admin.dashboard'),
-            'active' => request()->routeIs('admin.dashboard'),
-            'submenu' => [
-                [
-                    'name' => 'Productos',
-                    'href' => '#',
-                    'active' => false,
-                ],
-                [
-                    'name' => 'Categorias',
-                    'href' => '#',
-                    'active' => false,
-                ],
-                [
-                    'name' => 'Pedidos',
-                    'href' => '#',
-                    'active' => false,
-                ],
-            ],
-        ],
-    ];
+       [
+    'name' => 'Roles y Permisos',
+    'icono' => 'fa-solid fa-shield-halved',
+    'href' => route('admin.roles.index'), 
+    'active' => request()->routeIs('admin.roles.*'),
+],
+     ];
 @endphp
 
 <aside id="top-bar-sidebar" class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
