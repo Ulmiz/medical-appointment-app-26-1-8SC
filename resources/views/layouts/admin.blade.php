@@ -6,6 +6,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
       <script src="https://kit.fontawesome.com/3b70a64539.js" crossorigin="anonymous"></script>
+      {{--WireUI--}}
+          <wireui:scripts />
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
