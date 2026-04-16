@@ -136,3 +136,4 @@
                 </div>
             </x-wire-card>
     </form>
+</x-admin-layout>
