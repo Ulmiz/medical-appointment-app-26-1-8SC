@@ -21,14 +21,15 @@
     'href' => route('admin.users.index'),
     'active' => request()->routeIs('admin.users.*'),
 ],
-   ],
+
       [
       'name' => 'Pacientes',
       'icono' => 'fa-solid fa-user-injured',
       'href' => route('admin.patients.index'),
-      'active' => request()->routeIs('admin.users.*'),
-
-     ];
+      'active' => request()->routeIs('admin.patients.*'),
+      ],
+     
+    ];
 @endphp
 
 <aside id="top-bar-sidebar" class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">

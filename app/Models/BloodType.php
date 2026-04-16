@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BloodType extends Model
 {
-    // Relación uno a muchos con pacientes
-    public function patients()
-    {
-        return $this->HasMany(Patient::class);
+    //Relación uno a muchos
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

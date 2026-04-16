@@ -39,7 +39,7 @@ class UserController extends Controller
             'id_number' => 'required|string|min:5|max:20|regex:/^[A-Za-z0-9]+$/|unique:users',
             'phone' => 'required|digits_between:7,15',
             'address' => 'required|string|max:255',
-            'role_id' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id',
         ]);
 
         $user = User::create($data);
@@ -49,17 +49,18 @@ class UserController extends Controller
         session()->flash('swal', [
             'icon' => 'success',
             'title' => 'Usuario creado correctamente',
-            'text' => 'El usuario ha sido creado correctamente.',
+            'text' => 'El usuario ha sido creado exitosamente.',
         ]);
 
-        // Si el usuario creado es un paciente, envía el módulo pacientes
+        //Si el usuario creado es un paciente, envía el módulo pacientes
+
         if($user::role('Paciente')){
-            // Creamos el registro para un paciente
-             $patient = $user->patient()->create([]);
-             return redirect()->route('admin.patients.edit', $patient);
+            $patient = $user->patient()->create([]);
+            return redirect()->route('admin.patients.edit', $patient);
         }
 
-        return redirect(route('admin.users.index'))->with('success', 'Usuario creado correctamente');
+        return redirect(route('admin.users.index'))->with('success', 'User created successfully.');
+
     }
 
     /**
@@ -90,59 +91,55 @@ class UserController extends Controller
             'id_number' => 'required|string|min:5|max:20|regex:/^[A-Za-z0-9]+$/|unique:users,id_number,' . $user->id,
             'phone' => 'required|digits_between:7,15',
             'address' => 'required|string|max:255',
-            'role_id' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id',
         ]);
 
         $user->update($data);
-        //si el usuario quiere editar la contrase;a que lo guarde
 
-        if($request->filled('password')){
-           $user->password = bcrypt ($request->password);
-              $user->save();
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+            $user->save();
         }
-
-
 
         $user->roles()->sync($data['role_id']);
 
         session()->flash('swal', [
             'icon' => 'success',
-            'title' => 'Usuario actualizado.',
-            'text' => 'El usuario ha sido actualizado correctamente.'
+            'title' => 'Usuario actualizado correctamente',
+            'text' => 'El usuario ha sido actualizado exitosamente.',
         ]);
+
         return redirect()->route('admin.users.edit', $user->id);
     }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(User $user)
     {
 
-        // No permitir que un usuario logeado se elimine a sí mismo
+        //No permitir que un usuario se elimine a sí mismo
         if ($user->id == Auth::user()->id) {
             session()->flash('swal', [
                 'icon' => 'error',
-                'title' => 'Acción denegada. No puedes eliminarte a ti mismo.',
-                'text' => 'Por seguridad, no puedes eliminar tu propia cuenta.'
+                'title' => 'Error',
+                'text' => 'No puedes eliminarte a ti mismo.',
             ]);
-            abort(403, 'No puedes eliminarte a ti mismo.');
-
+            abort(403, 'No puedes borrar tu propio usuario.');
             return redirect(route('admin.users.index'));
         }
 
-
-        //Eliminar roles asociados a un usuario
+        //Eliminar roles asociados al usuario
         $user->roles()->detach();
 
-        //Eliminar usuario
         $user->delete();
 
         session()->flash('swal', [
             'icon' => 'success',
-            'title' => 'Usuario eliminado.',
-            'text' => 'El usuario ha sido eliminado correctamente.'
+            'title' => 'Usuario eliminado',
+            'text' => 'El usuario ha sido eliminado exitosamente.',
         ]);
 
-        return redirect(route('admin.users.index'));
+        return redirect(route('admin.users.index'))->with('success', 'User deleted successfully.');
     }
 }
