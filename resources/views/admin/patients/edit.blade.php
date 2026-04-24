@@ -1,7 +1,7 @@
 <x-admin-layout title="Pacientes" :breadcrumbs="[
     [
-        'name' => 'Dashboard',
-        'href' => route('admin.dashboard'),
+    'name' => 'Dashboard',
+    'href' => route('admin.dashboard'),
     ],
     [
         'name' => 'Pacientes',
@@ -16,12 +16,12 @@
         @csrf
         @method('PUT')
     <!-- Encabezado con fotos y acciones -->
-    <x-wire-card>
+    <x-wire-card class="mb-8">
             <div class="lg:flex lg:justify-between lg:items-center">
                 <div class="flex items-center">
                     <img src="{{$patient->user->profile_photo_url}}" alt="{{$patient->user->name}}" class="h-20 w-20 rounded-full object-cover object-center">
                     <div>
-                        <p class="text-2xl font-bold text-gray-900">{{$patient->user->name}}</p>
+                        <p class="text-2xl font-bold text-gray-900 ml-4">{{$patient->user->name}}</p>
                     </div>
                 </div>
                 <div class="flex space-x-3 mt-6 lg:mt-0">
@@ -74,7 +74,7 @@
                                 }"
                                 class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200" :aria-current="tab === 'informacion-general' ? 'page' : undefined">
                                 <i class="fa-solid fa-info me-2"></i>
-                                    Información general
+                                Información general
                                 </a>
                             </li>
                             <!-- Tab 4: Contacto de emergencia -->
@@ -96,12 +96,13 @@
                         <!-- Contenido del tab 1: Datos personales -->
                         <div x-show="tab === 'datos-personales'">
                             <div class="bg-blue-100 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg shadow-sm">
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                                     <!-- Lado izquierdo: Informacion Personal -->
                                     <div class="flex items-start">
                                         <div class="flex-shrink-0">
                                             <i class="fa-solid fa-user-gear text-blue-500 text-xl mt-1"></i>
-                                            <div class="ml-3">
+                                        </div>
+                                        <div class="ml-3">
                                                 <h3 class="text-sm font-bold text-blue-800">
                                                     Información de cuenta de usuario
                                                 </h3>
@@ -118,22 +119,80 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="grid lg:grid-cols-2 gap-4">
+                                    <div>
+                                        <span class="text-gray-500 font-semibold">Teléfono: </span>
+                                        <span class="text-gray-900 text-sm ml-1">{{$patient->user->phone}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500 font-semibold">Correo: </span>
+                                        <span class="text-gray-900 text-sm ml-1">{{$patient->user->email}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500 font-semibold">Dirección: </span>
+                                        <span class="text-gray-900 text-sm ml-1">{{$patient->user->address}}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Contenido del tab 2: Antecedentes -->
-                        <div x-show="tab === 'antecedentes'">
+                        <div x-show="tab === 'antecedentes'" style="display: none;">
+                            <div class="grid lg:grid-cols-2 gap-4">
+                                <div>
+                                    <x-wire-textarea label="Alergias conocidas" name="allergies">
+                                        {{old('allegies', $patient->allergies)}}
+                                    </x-wire-textarea>
+                                </div>
+                                <div>
+                                    <x-wire-textarea label="Enfermedades crónicas" name="chronic_conditions">
+                                        {{old('chronic_conditions', $patient->chronic_conditions)}}
+                                    </x-wire-textarea>
+                                </div>
+                                <div>
+                                    <x-wire-textarea label="Antecedentes quirúrgicos" name="surgical_history">
+                                        {{old('surgical_history', $patient->surgical_history)}}
+                                    </x-wire-textarea>
+                                </div>
+                                <div>
+                                    <x-wire-textarea label="Antecedentes familiares" name="family_history">
+                                        {{old('family_history', $patient->family_history)}}
+                                    </x-wire-textarea>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Contenido del tab 3: Información general -->
-                        <div x-show="tab === 'informacion-general'">
+                        <div x-show="tab === 'informacion-general'" style="display: none;">
+                            <div class="grid lg:grid-cols-2 gap-4">
+                                <div>
+                                    <x-wire-native-select label="Tipo de Sangre" class="mb-4" name="blood_type_id">
+                                        <option value="">Selecciona un tipo de sangre</option>
+                                        @foreach ($bloodTypes as $bloodTypes)
+                                        <option value="{{$bloodTypes->id}}" @selected(old('blood_type_id', $patient->blood_type_id) == $bloodTypes->id)>
+                                            {{$bloodTypes->name}}
+                                        </option>
+
+                                        @endforeach
+                                    </x-wire-native-select>
+                                    <x-wire-textarea label="Obsevaciones" name="observations">
+                                        {{old('observations', $patient->observations)}}
+                                    </x-wire-textarea>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Contenido del tab 4: Contacto de emergencia -->
                         <div x-show="tab === 'contacto-emergencia'">
+                            <div class="space-y-4">
+                                <x-wire-input label="Nombre de contacto" name="emergency_contact_name" value="{{old('emergency_contact_name', $patient->emergency_contact_name)}}"/>
+                                <x-wire-phone label="Teléfono de contacto" name="emergency_contact_phone" value="{{old('emergency_contact_phone', $patient->emergency_contact_phone)}}" mask="(###) ###-####" placeholder="(123) 456-7890"/>
+                                <x-wire-input label="Relación con el contacto" name="emergency_contact_relationship" placeholder="Familiar, Amigo, etc." value="{{old('emergency_contact_relationship', $patient->emergency_contact_relationship)}}"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </x-wire-card>
     </form>
+
 </x-admin-layout>

@@ -56,6 +56,17 @@
             </script>
         @endif
 
+        {{-- Mostrar Sweet Alert (Errores de validación) --}}
+        @if ($errors->any())
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: 'Hay campos incorrectos en el formulario. Por favor, revisa todas las pestañas.',
+                });
+            </script>
+        @endif
+
         @livewireScripts
         <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
