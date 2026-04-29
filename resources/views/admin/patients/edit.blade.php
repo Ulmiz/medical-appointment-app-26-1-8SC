@@ -186,7 +186,7 @@
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div>
                                     <x-wire-textarea label="Alergias conocidas" name="allergies">
-                                        {{old('allegies', $patient->allergies)}}
+                                        {{old('allergies', $patient->allergies)}}
                                     </x-wire-textarea>
                                 </div>
                                 <div>
