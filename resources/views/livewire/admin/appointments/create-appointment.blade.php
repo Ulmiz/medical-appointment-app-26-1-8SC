@@ -119,7 +119,7 @@
                     </div>
                 </div>
 
-                <button wire:click="save" wire:loading.attr="disabled" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg shadow-sm transition duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed">
+                <button wire:click="save" wire:loading.attr="disabled" wire:target="save" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg shadow-sm transition duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed">
                     <span wire:loading.remove wire:target="save">Confirmar cita</span>
                     <span wire:loading wire:target="save">
                         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
